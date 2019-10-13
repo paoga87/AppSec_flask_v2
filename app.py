@@ -42,11 +42,37 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template("login.html")
+    if request.method == 'POST':
+        username = request.form['uname'].lower()
+        if (username in Users.keys()):
+            password = request.form['pword']
+            twofa = request.form['2fa']
+            if (Users[username]['pword'] == password and Users[username]['2fa'] == twofa):
+                session['logged_in'] = True
+                result = "success"
+                g.user = username
+                return redirect(url_for('spell'))
+            else:
+                result = "Two-factor failure"
+        else:
+            result = "Incorrect username/password"
+    else:
+            result = "Please log in to access the site"
+        
+    return render_template('login.html', result = result)
+
+    if request.method == 'GET':
+        result = "Please login to use the site"
+        return render_template("login.html", result = result)
 
 @app.route('/spell_check')
 def spell():
     return "Spell checker page"
+
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':
