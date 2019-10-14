@@ -51,7 +51,6 @@ def login():
                 if (Users[username]['2fa'] == twofa):
                     session['logged_in'] = True
                     result = "success"
-                    return redirect(url_for('spell'))
                 else:
                     result = "Two-factor failure"
             else:
@@ -67,7 +66,23 @@ def login():
 
 @app.route('/spell_check')
 def spell():
-    return "Spell checker page"
+    if(session.get('logged_in') == True): 
+        #cpath = os.getcwd()
+        #if request.method == 'POST':
+            #outputtext = request.form ['inputtext']
+            #textfile = open("./static.text.tx", "w")
+            #textfile.writelines(outputtext)
+            #textfile.close()
+
+            #tmp = subprocess.check_output([cpath + '/static/a.out',cpath + '/static/text.text', cpath + '/static/wordlist.txt']).decode('utf-8')
+            #mispelled = tmp.replace("\n",", ")[:-2]
+            #return render_template("spell_check.html", mispelled = mispelled, outputtext = outputtext)
+
+        return render_template("spell_check.html")
+    else:
+        return redirect(url_for('login'))
+    
+
 
 @app.route('/logout')
 def logout():
