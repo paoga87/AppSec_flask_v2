@@ -47,19 +47,19 @@ def login():
         if (username in Users.keys()):
             password = request.form['pword']
             twofa = request.form['2fa']
-            if (Users[username]['pword'] == password and Users[username]['2fa'] == twofa):
-                session['logged_in'] = True
-                result = "success"
-                g.user = username
-                return redirect(url_for('spell'))
+            if (Users[username]['password'] == password):
+                if (Users[username]['2fa'] == twofa):
+                    session['logged_in'] = True
+                    result = "success"
+                    return redirect(url_for('spell'))
+                else:
+                    result = "Two-factor failure"
             else:
-                result = "Two-factor failure"
+                result = "Incorrect password"
         else:
-            result = "Incorrect username/password"
-    else:
-            result = "Please log in to access the site"
+            result = "Incorrect username"
         
-    return render_template('login.html', result = result)
+        return render_template('login.html', result = result)
 
     if request.method == 'GET':
         result = "Please login to use the site"
