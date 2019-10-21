@@ -65,19 +65,19 @@ def login():
         result = "Please login to use the site"
         return render_template("login.html", result = result)
 
-@app.route('/spell_check')
+@app.route('/spell_check', methods=['GET', 'POST'])
 def spell():
     if(session.get('logged_in') == True): 
         cpath = os.getcwd()
         if request.method == 'POST':
             outputtext = request.form ['inputtext']
-            textfile = open("./static.text.tx", "w")
+            textfile = open("./static/text.txt", "w")
             textfile.writelines(outputtext)
             textfile.close()
 
-            tmp = subprocess.check_output([cpath + '/static/a.out',cpath + '/static/text.text', cpath + '/static/wordlist.txt']).decode('utf-8')
-            mispelled = tmp.replace("\n",", ")[:-2]
-            return render_template("spell_check.html", mispelled = mispelled, outputtext = outputtext)
+            tmp = subprocess.check_output([cpath + '/static/a.out', cpath + '/static/text.txt', cpath + '/static/wordlist.txt']).decode('utf-8')
+            misspelled = tmp.replace("\n",", ")[:-2]
+            return render_template("spell_check.html", misspelled = misspelled, outputtext = outputtext)
 
         if request.method == 'GET':
             return render_template("spell_check.html")
