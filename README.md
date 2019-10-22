@@ -11,7 +11,13 @@ Tasked with creating a Web service to provide spell checking capability (using t
 5. Result retrieval: /your/webroot/spell_check
 
 # Usage
-At the time of development, this was created using Python 3. You need to make sure you also have Flask installed.
+At the time of development, this was created using Python 3. You need to make sure you also have Flask and Flask-WTF installed.
+
+## To install Flask
+`pip install flask`
+
+## To install Flask-WTF
+`pip install Flask-WTF`
 
 ## To run the code
 Go into the root directory and type:
