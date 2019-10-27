@@ -1,3 +1,4 @@
+![Build Status](https://travis-ci.org/paoga87/AppSec_flask_v2.svg?branch=master)
 # AppSec_flask_v2
 Running a registration/login program using Flask. This is part of NYU's CS-GY 9163 Application Security course - Flask Assignment
 
