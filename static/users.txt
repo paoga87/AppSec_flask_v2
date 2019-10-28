@@ -1,1 +1,1 @@
-{"admin": {"password": "admin", "2fa": "01234567890"}}
+{"admin": {"password": "$5$rounds=535000$k6D.3tOdE/2Tqe9J$luxdy5Gptptpkx7GHrcFfIW9NDaQk0iQhSiuezFUed8", "2fa": "1234567890"}}

@@ -5,6 +5,7 @@ from subprocess import Popen, PIPE, check_output
 from flask import Flask, render_template, redirect, url_for, session, request
 from flask_wtf.csrf import CSRFProtect
 from flask_talisman import Talisman
+from passlib.hash import sha256_crypt
 
 
 app = Flask(__name__)
@@ -31,7 +32,7 @@ def register():
         if (username in Users.keys()):
             success = "failure"
         else:
-            password = request.form['pword']
+            password = sha256_crypt.hash(request.form['pword'])
             twofa = request.form['2fa']
             Users[username] = {'password': password, '2fa': twofa}
             success = "success"
@@ -52,7 +53,7 @@ def login():
         if (username in Users.keys()):
             password = request.form['pword']
             twofa = request.form['2fa']
-            if (Users[username]['password'] == password):
+            if sha256_crypt.verify(password, Users[username]['password']):
                 if (Users[username]['2fa'] == twofa):
                     session['logged_in'] = True
                     result = "success"
