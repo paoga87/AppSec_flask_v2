@@ -4,6 +4,7 @@ import json
 from subprocess import Popen, PIPE, check_output
 from flask import Flask, render_template, redirect, url_for, session, request
 from flask_wtf.csrf import CSRFProtect
+from flask_talisman import Talisman
 
 
 app = Flask(__name__)
@@ -11,6 +12,9 @@ app.config['SECRET_KEY'] = 'WxND4o83j4K4iO3762'
 
 #Initialize csrf token
 csrf = CSRFProtect(app)
+
+#Initialize Talisman
+Talisman(app, force_https=False, strict_transport_security=False, session_cookie_secure=False)
 
 #Users file
 Users = {}
